@@ -1,0 +1,32 @@
+#开发环境配置
+
+
+## 服务端口配置
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+
+
+#启用Eureka对Ribbon服务实例的维护
+ribbon:
+  eureka:
+    enabled: true
+
+# 启用对Hystrix熔断机制支持
+feign:
+  hystrix:
+    enabled: true
+#显示监控信息
+management:
+  endpoints:
+    web:
+      exposure:
+        #开放所有页面节点
+        include: "*"

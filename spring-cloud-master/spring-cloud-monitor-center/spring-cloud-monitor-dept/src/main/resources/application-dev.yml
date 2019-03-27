@@ -1,0 +1,47 @@
+## 服务端口配置
+server:
+  port: 9001
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: hystrix-dashboard-turbine
+
+#监控配置
+management:
+  server:
+    #actuator端口
+    port: ${server.port}
+  endpoints:
+    web:
+      #修改访问路径  2.0之前默认是/   2.0默认是 /actuator  可以通过这个属性值修改
+      #base-path: /monitor
+      exposure:
+        #开放所有页面节点  默认只开启了health、info两个节点
+        include: "*"
+
+  endpoint:
+    health:
+      #显示健康具体信息
+      show-details: always
+    hystrix:
+      stream:
+        enabled: true
+
+
+  #聚合监控配置
+turbine:
+  #配置需要监控的服务
+  aggregator:
+    #指定聚合哪些集群，多个使用”,”分割，默认为default。可使用http://.../turbine.stream?cluster={clusterConfig之一}访问
+    cluster-config: default
+  app-config: provider-dept-hystrix01,provider-dept-hystrix02,provider-dept-hystrix03
+  cluster-name-expression: new String("default")
+  combine-host-port: true
+  instanceUrlSuffix: /actuator/hystrix.stream
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/

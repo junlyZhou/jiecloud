@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.company.project</groupId>
+    <artifactId>spring-cloud-master</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>spring-cloud-dcm4che3</module>
+        <module>spring-cloud-commons-utils</module>
+        <module>spring-cloud-providers</module>
+        <module>spring-cloud-providers-api</module>
+        <module>spring-cloud-eureka</module>
+        <module>spring-cloud-consumers</module>
+        <module>spring-cloud-monitor-center</module>
+        <module>spring-cloud-gateway</module>
+        <module>spring-cloud-sleuth-zipkin</module>
+    </modules>
+    <packaging>pom</packaging>
+    <description>工程根目录，管理所有jar依赖及版本</description>
+
+    <!--统一管理jar包版本-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--指定编译版本-->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+
+        <!--junit-->
+        <junit.version>4.12</junit.version>
+        <!--lombok-->
+        <lombok.version>1.18.4</lombok.version>
+
+        <!--数据持久层配置-->
+        <!--druid连接池起步依赖 -->
+        <druid-spring-boot.version>1.1.10</druid-spring-boot.version>
+        <!--mybatisplus-spring-boot 起步依赖-->
+        <mybatisplus-spring-boot.version>1.0.5</mybatisplus-spring-boot.version>
+        <!--mybatis-plus-->
+        <mybatis-plus.version>3.1.0</mybatis-plus.version>
+        <!--模板引擎-->
+        <velocity.version>2.0</velocity.version>
+        <!--动态数据源起步依赖-->
+        <dynamic-datasource-spring-boot.version>2.5.0</dynamic-datasource-spring-boot.version>
+        <!--链路追踪服务-->
+        <zipkin.version>2.12.5</zipkin.version>
+        <!--json/xml 格式支持-->
+        <jackson-jaxrs-xml.version>2.9.8</jackson-jaxrs-xml.version>
+        <!--jjwt-->
+        <jjwt.version>0.9.1</jjwt.version>
+        <!--netty-websocket-spring-boot-starter-->
+        <netty-websocket.version>0.7.3</netty-websocket.version>
+        <!--热部署-->
+        <springloaded.version>1.2.8.RELEASE</springloaded.version>
+
+        <!--properties 、 XML 配置 敏感信息加密-->
+        <jasypt-spring-boot.version>2.1.1</jasypt-spring-boot.version>
+
+
+        <!--工具类依赖-->
+        <!-- guava -->
+        <guava.version>27.0.1-jre</guava.version>
+        <!--fastjson-->
+        <fastjson.version>1.2.56</fastjson.version>
+        <!-- httpclient -->
+        <httpclient.version>4.5.7</httpclient.version>
+        <!-- HTML解析工具 -->
+        <jsoup.version>1.11.3</jsoup.version>
+        <!--hutool-->
+        <hutool.version>4.5.0</hutool.version>
+        <!--poi工具-->
+        <poi.version>4.0.1</poi.version>
+        <!--二维码生成工具-->
+        <zxing.version>3.3.3</zxing.version>
+        <!--emoji 表情处理-->
+        <emoji-java.version>4.0.0</emoji-java.version>
+
+        <!--阿里云相关配置-->
+        <aliyun-sdk-core.version>4.1.1</aliyun-sdk-core.version>
+        <!--aliyun-sdk-oss 对象存储-->
+        <aliyun-oss.version>2.8.3</aliyun-oss.version>
+        <!--aliyun-dysmsapi 阿里云短信通讯-->
+        <aliyun-dysmsapi.version>1.1.0</aliyun-dysmsapi.version>
+        <!--天翼云对象存储-->
+        <ctyun-oos.version>5.0.0</ctyun-oos.version>
+    </properties>
+
+
+    <!--只是对版本进行管理，不会实际引入jar  -->
+    <dependencyManagement>
+        <dependencies>
+            <!--spring cloud依赖-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Greenwich.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--spring boot 版本依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.1.3.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- druid-spring-boot-starter druid连接池起步依赖  -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot.version}</version>
+            </dependency>
+            <!-- mybatisplus-spring-boot-starter mybatisplus起步依赖  -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatisplus-spring-boot-starter</artifactId>
+                <version>${mybatisplus-spring-boot.version}</version>
+            </dependency>
+            <!-- mybatis-plus 依赖 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!--mybatis 代码生成器-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!--velocity 模板引擎 -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <!-- 动态数据源起步依赖 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource-spring-boot.version}</version>
+            </dependency>
+
+            <!-- zipkin-server 链路追踪服务 -->
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin-server</artifactId>
+                <version>${zipkin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.zipkin.java</groupId>
+                <artifactId>zipkin-autoconfigure-ui</artifactId>
+                <version>${zipkin.version}</version>
+            </dependency>
+
+            <!-- jjwt -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!--netty-websocket 依赖-->
+            <dependency>
+                <groupId>org.yeauty</groupId>
+                <artifactId>netty-websocket-spring-boot-starter</artifactId>
+                <version>${netty-websocket.version}</version>
+            </dependency>
+            <!-- springloaded 热部署插件 -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>springloaded</artifactId>
+                <version>${springloaded.version}</version>
+            </dependency>
+            <!--properties 、 XML 配置 敏感信息加密-->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt-spring-boot.version}</version>
+            </dependency>
+            <!-- 谷歌 guava  -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!-- HTML 解析工具 -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
+            <!-- hutool-all 类库 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- poi-ooxml  -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <!-- zxing 二维码 -->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+            <!-- emoji-java -->
+            <dependency>
+                <groupId>com.vdurmont</groupId>
+                <artifactId>emoji-java</artifactId>
+                <version>${emoji-java.version}</version>
+            </dependency>
+
+            <!--阿里云相关配置-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${aliyun-sdk-core.version}</version>
+            </dependency>
+            <!--aliyun-sdk-oss 阿里云对象存储 -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-oss.version}</version>
+            </dependency>
+            <!--aliyun-dysmsapi 阿里云短信平台-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>${aliyun-dysmsapi.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

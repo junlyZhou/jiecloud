@@ -1,0 +1,94 @@
+#开发环境配置
+
+# 配置文件加密的key
+jasypt:
+  encryptor:
+    password: MzSwFxf1ByZMCVa*
+
+
+## 服务端口配置
+server:
+  port: 8001
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    #指定项目根路径
+    context-path: /
+## 数据库访问配置
+spring:
+  application:
+    #微服务名称
+    name: provider-dept-hystrix
+  autoconfigure:
+    #排除原生Druid的快速配置类
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+
+  #配置数据源（支持多数据源配置）
+  datasource:
+    dynamic:
+      #配置当前默认数据源
+      primary: cloud_db01
+      # 全局druid参数，绝大部分值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+      druid:
+        initial-size: 0
+        max-active: 20
+        min-idle: 5
+        max-wait: 60000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        validation-query: SELECT 1 FROM DUAL
+        use-global-datasource-stat: true
+        pool-prepared-statements: true
+        connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+        # 注意这个值和druid原生不一致，默认启动了stat,wall
+        filters: stat,wall,log4j2
+      #配置数据源(可配置多个)
+      datasource:
+        cloud_db01:
+          username: ENC(XF2qc2j8uWyYagpPmvFezQ==)
+          password: ENC(jzg0rX9I72jH+fseUtVXkBaVyB6jdnsn)
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/cloud_db01?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+          # 使用druid数据源
+          #type: com.alibaba.druid.pool.DruidDataSource
+          druid:
+            initial-size: 5
+
+#mybatis
+mybatis-plus:
+    mapper-locations: classpath*:mapper/**/*.xml
+    #实体扫描，多个package用逗号或者分号分隔
+    typeAliasesPackage: com.company.dept.entities
+    global-config:
+      # 数据库相关配置
+      db-config:
+        #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+        id-type: ID_WORKER
+        #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+        field-strategy: NOT_NULL
+        #数据库大写下划线转换
+        #capital-mode: true
+        #逻辑删除配置（下面3个配置）
+        logic-delete-value: 0
+        logic-not-delete-value: 1
+        #数据库类型
+        db-type: MYSQL
+    #原生配置
+    configuration:
+        #是否开启自动驼峰命名规则
+        map-underscore-to-camel-case: true
+        #禁用缓存
+        cache-enabled: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    #显示服务地址
+    instance-id: ${spring.application.name}:${server.port}
+    #显示IP地址
+    prefer-ip-address: true
